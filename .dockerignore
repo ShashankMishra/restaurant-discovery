@@ -1,0 +1,10 @@
+.git
+.idea
+.gradle
+build
+target
+*.pdf
+.DS_Store
+docs
+*.md
+!src/main/resources/**
