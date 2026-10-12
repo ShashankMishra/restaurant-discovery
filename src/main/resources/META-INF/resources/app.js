@@ -97,7 +97,8 @@ document.getElementById("add-form").addEventListener("submit", async (event) => 
       showStatus(errorText(payload, res.status));
       return;
     }
-    showStatus(`Added “${payload.name}” with id ${payload.id}.`);
+    const savedRating = payload.averageRating == null ? "unrated" : Number(payload.averageRating).toFixed(1);
+    showStatus(`Added “${payload.name}” with id ${payload.id}, rating ${savedRating}.`);
     renderDetail(payload);
     event.target.reset();
     document.getElementById("add-currency").value = "Rs.";
