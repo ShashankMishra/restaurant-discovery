@@ -17,6 +17,7 @@ public class RestaurantQueryService {
   @Inject RestaurantMapper mapper;
 
   public RestaurantPage search(RestaurantQuery q) {
+    validate(q);
     int page = Math.max(q.page, 1);
     int size = Math.min(Math.max(q.size, 1), 100);
     int skip = (page - 1) * size;
@@ -100,6 +101,18 @@ public class RestaurantQueryService {
       case NAME -> new Document("nameLower", 1);
       case RATING -> new Document("rating.aggregate", -1).append("nameLower", 1);
     };
+  }
+
+  private void validate(RestaurantQuery q) {
+    if (q.sort == SortBy.DISTANCE && !q.hasCoordinates()) {
+      throw new IllegalArgumentException("sort=distance needs lat and lng");
+    }
+    if ((q.lat == null) != (q.lng == null)) {
+      throw new IllegalArgumentException("lat and lng must be provided together");
+    }
+    if (q.hasCoordinates() && !RestaurantMapper.isValidCoord(q.lng, q.lat)) {
+      throw new IllegalArgumentException("lat/lng out of range (0,0 is treated as missing)");
+    }
   }
 
   private static Document regex(String field, String value, boolean anchored) {
