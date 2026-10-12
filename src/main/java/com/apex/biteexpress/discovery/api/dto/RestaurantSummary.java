@@ -10,4 +10,6 @@ public record RestaurantSummary(
     String country,
     List<String> cuisines,
     Double averageRating,
+    Integer avgCostForTwo,
+    String currency,
     Double distanceKm) {}

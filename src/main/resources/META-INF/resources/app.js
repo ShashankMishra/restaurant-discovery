@@ -43,7 +43,7 @@ document.getElementById("search-form").addEventListener("submit", (event) => {
 document.getElementById("browse-form").addEventListener("submit", (event) => {
   event.preventDefault();
   const params = new URLSearchParams();
-  ["city", "cuisines", "name", "minRating", "maxDistanceKm", "sort"].forEach((name) => {
+  ["city", "cuisines", "name", "minRating", "maxCostForTwo", "maxDistanceKm", "sort"].forEach((name) => {
     const v = value(name);
     if (v) params.set(name, v);
   });
@@ -72,8 +72,6 @@ document.getElementById("add-form").addEventListener("submit", async (event) => 
   if (cuisines) {
     body.cuisines = cuisines.split(",").map((s) => s.trim()).filter(Boolean);
   }
-  const rating = value("add-rating");
-  if (rating) body.averageRating = Number(rating);
   const cost = value("add-cost");
   if (cost) body.avgCostForTwo = Number(cost);
   const lat = value("add-lat");
@@ -245,11 +243,16 @@ function renderDetail(r) {
 function card(r) {
   const cuisines = (r.cuisines || []).join(", ");
   const rating = r.averageRating == null ? "unrated" : Number(r.averageRating).toFixed(1);
+  const cost =
+    r.avgCostForTwo == null
+      ? ""
+      : `<div class="meta">${escapeHtml(r.currency || "Rs.")} ${r.avgCostForTwo} for two</div>`;
   const distance = r.distanceKm == null ? "" : `<div class="meta">${r.distanceKm} km from the starting point</div>`;
   return `<button type="button" class="card" data-id="${escapeHtml(r.id)}">
     <h2>${escapeHtml(r.name)} <span class="rating">${rating}</span></h2>
     <div class="meta">${escapeHtml([r.city, cuisines].filter(Boolean).join(" · "))}</div>
     <div class="meta">${escapeHtml(r.address || "")}</div>
+    ${cost}
     ${distance}
   </button>`;
 }

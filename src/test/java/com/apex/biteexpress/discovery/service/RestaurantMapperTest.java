@@ -33,9 +33,6 @@ class RestaurantMapperTest {
             true,
             true,
             false,
-            4.1,
-            10,
-            "Very Good",
             0.0,
             0.0);
     Restaurant r = mapper.fromCreate(req, 99L);
@@ -43,6 +40,7 @@ class RestaurantMapperTest {
     assertEquals("test kitchen", r.nameLower);
     assertEquals("India", r.country);
     assertNull(r.location);
+    assertNull(r.rating);
     RestaurantDetail d = mapper.toDetail(r);
     assertEquals(99L, d.id());
     assertNull(d.latitude());
@@ -58,10 +56,13 @@ class RestaurantMapperTest {
             .append("country", "India")
             .append("cuisines", List.of("South Indian"))
             .append("rating", new Document("aggregate", 4.4))
+            .append("avgCostForTwo", 700)
+            .append("currency", "Rs.")
             .append("distanceMeters", 1234.0);
     RestaurantSummary s = mapper.toSummary(doc);
     assertEquals(1.23, s.distanceKm());
     assertEquals(4.4, s.averageRating());
+    assertEquals(700, s.avgCostForTwo());
   }
 
   @Test

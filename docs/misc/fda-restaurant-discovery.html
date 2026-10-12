@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FDA panel — BiteExpress on MongoDB</title>
+<title>BiteExpress — restaurant discovery</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
@@ -41,6 +41,7 @@ body {
   justify-content: center;
   padding: 6vh 8vw;
   visibility: hidden; pointer-events: none;
+  background: var(--bg);
 }
 .slide.active { visibility: visible; pointer-events: all; }
 .slide.center  { align-items: center; text-align: center; }
@@ -88,32 +89,32 @@ body {
 }
 
 h1 {
-  font-size: clamp(2.2rem, 5vw, 4.2rem);
-  font-weight: 600; line-height: 1.08;
+  font-size: clamp(1.85rem, 4.2vw, 3.2rem);
+  font-weight: 600; line-height: 1.12;
   letter-spacing: -.03em;
+  max-width: 18em;
 }
 h2 {
-  font-size: clamp(1.45rem, 3.1vw, 2.55rem);
+  font-size: clamp(1.45rem, 3.1vw, 2.4rem);
   font-weight: 600; line-height: 1.15;
   letter-spacing: -.03em;
   margin-bottom: .5em;
 }
 .accent-g { color: var(--green); }
-.accent-c { color: var(--cyan); }
 .accent-y { color: var(--yellow); }
-.accent-p { color: var(--purple); }
 
 .sub {
-  font-size: clamp(.95rem, 1.55vw, 1.25rem);
-  color: var(--muted); margin-top: .55em;
+  font-size: clamp(.95rem, 1.55vw, 1.22rem);
+  color: var(--muted); margin-top: .7em;
   font-weight: 400;
-  max-width: 42em;
+  max-width: 40em;
+  line-height: 1.45;
 }
 
 .big-list { list-style: none; width: 100%; }
 .big-list li {
-  font-size: clamp(.9rem, 1.4vw, 1.22rem);
-  line-height: 1.45;
+  font-size: clamp(.88rem, 1.35vw, 1.18rem);
+  line-height: 1.5;
   padding: .42em 0;
   border-bottom: 1px solid rgba(61, 79, 88, .55);
   display: flex; align-items: baseline; gap: .7em;
@@ -123,43 +124,22 @@ h2 {
 .bullet {
   font-family: var(--mono);
   color: var(--green); font-weight: 600;
-  flex-shrink: 0; min-width: 3.2em;
+  flex-shrink: 0; min-width: 4.4em;
   font-size: .72em; letter-spacing: .04em;
 }
 .bullet.red  { color: var(--red); }
 .bullet.cyan { color: var(--cyan); }
 .bullet.yel  { color: var(--yellow); }
-.bullet.pur  { color: var(--purple); }
 
 .big-quote {
-  font-size: clamp(1.05rem, 2vw, 1.55rem);
+  font-size: clamp(1.05rem, 1.9vw, 1.45rem);
   font-style: normal; font-weight: 400;
   line-height: 1.5;
   border-left: 3px solid var(--green);
-  padding: .6em 0 .6em 1.2em;
-  color: var(--text); max-width: 80vw;
+  padding: .55em 0 .55em 1.15em;
+  color: var(--text); max-width: 42em;
+  margin-top: .9em;
 }
-.big-quote cite {
-  display: block; margin-top: .5em;
-  font-size: .55em; color: var(--muted);
-  letter-spacing: .08em;
-  font-family: var(--mono);
-  text-transform: uppercase;
-}
-.big-quote cite::before { content: ''; }
-
-.pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1.2em; justify-content: center; }
-.pill {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  padding: .5em 1.1em;
-  font-size: clamp(.75rem, 1.25vw, 1rem);
-  color: var(--text); opacity: 0;
-  font-family: var(--mono);
-  letter-spacing: .02em;
-  border-radius: 4px;
-}
-.pill::before { content: ''; }
 
 .diagram {
   width: 100%;
@@ -179,17 +159,16 @@ h2 {
 
 .diagram-note {
   width: 100%; text-align: center;
-  color: var(--muted); font-size: clamp(.75rem, 1.2vw, 1rem);
-  margin-top: .8em; opacity: 0; font-weight: 300;
+  color: var(--muted); font-size: clamp(.78rem, 1.15vw, 1rem);
+  margin-top: .8em; opacity: 0; font-weight: 400;
+  max-width: 52em;
+  margin-left: auto; margin-right: auto;
+  line-height: 1.45;
 }
-.diagram-note .accent-g { color: var(--green); }
-.diagram-note .accent-c { color: var(--cyan); }
 
 .split { display: flex; gap: 3vw; width: 100%; align-items: center; }
-.split > .col-text { flex: 1; }
-.split > .col-diagram { flex: 1.15; }
-.split .diagram { margin-top: 0; }
-.split .diagram svg { max-height: 58vh; }
+.split > .col-text { flex: 1.1; }
+.split > .col-diagram { flex: 1; }
 
 code {
   font-family: var(--mono);
@@ -204,7 +183,7 @@ code {
 .schema {
   font-family: var(--mono);
   font-size: clamp(.62rem, 1vw, .82rem);
-  line-height: 1.4;
+  line-height: 1.45;
   background: #012A36;
   border: 1px solid var(--border);
   padding: 1em 1.15em;
@@ -218,7 +197,6 @@ code {
 }
 .schema .k { color: var(--cyan); }
 .schema .s { color: var(--green); }
-.schema .n { color: var(--yellow); }
 
 #progress {
   position: fixed; bottom: 28px; left: 0; height: 3px;
@@ -241,303 +219,321 @@ code {
 #statusbar .right { display: flex; gap: 20px; }
 #s-pos { color: var(--green) !important; }
 
-.cursor {
-  display: inline-block; width: .42em; height: .85em;
-  background: var(--green); margin-left: .12em;
-  vertical-align: text-bottom;
-  animation: blink 1.1s step-end infinite;
+.wh {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.1vw;
+  width: 100%;
+  margin-top: .6em;
 }
-@keyframes blink { 50% { opacity: 0; } }
+.wh-card {
+  background: #012A36;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1em 1.05em 1.1em;
+  opacity: 0;
+}
+.wh-l {
+  font-family: var(--mono);
+  font-size: .68rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: .45em;
+}
+.wh-card p {
+  font-size: clamp(.8rem, 1.15vw, 1.02rem);
+  line-height: 1.45;
+  color: var(--text);
+}
+.wh-card.later .wh-l { color: var(--yellow); }
 
-.slide { background: var(--bg); }
+.timeline {
+  display: flex;
+  width: 100%;
+  gap: 0;
+  margin-top: .8em;
+  align-items: stretch;
+}
+.tl {
+  flex: 1;
+  padding: 1em 1.2em;
+  border: 1px solid var(--border);
+  background: #012A36;
+  opacity: 0;
+}
+.tl + .tl { border-left: none; }
+.tl .wh-l { margin-bottom: .5em; }
+.tl p { font-size: clamp(.82rem, 1.15vw, 1.02rem); line-height: 1.45; }
+.tl.now { border-top: 3px solid var(--red); }
+.tl.y1 { border-top: 3px solid var(--green); }
+.tl.y2 { border-top: 3px solid var(--yellow); }
 </style>
 </head>
 <body>
 
 <div class="term-bar">
   <div class="term-mark"></div>
-  <span class="term-title">Take-home · BiteExpress discovery</span>
+  <span class="term-title">BiteExpress · restaurant discovery</span>
 </div>
 
 <div class="slide center active" id="s1">
-  <div class="kicker" style="justify-content:center;">take-home</div>
-  <h1>BiteExpress restaurant <span class="accent-g">discovery</span><span class="cursor"></span></h1>
-  <p class="sub">I built a MongoDB search API for restaurants, and wrote down how it would sit next to their current backend.</p>
-  <p class="sub" style="margin-top:1.5em;color:var(--dim);font-size:.8rem;">space / arrows to move</p>
+  <div class="kicker" style="justify-content:center;">recommendation</div>
+  <h1>Take the peak restaurant list off the Gurugram monolith this year.</h1>
+  <p class="big-quote">Keep SQL as the source of record until Atlas can own restaurants by country. I will not move orders or payments to fix a slow list.</p>
+  <p class="sub">Two clocks: reliability at lunch in 6–12 months, then cloud, countries, and data rules in 2–3 years.</p>
 </div>
 
 <div class="slide left" id="s2">
-  <div class="kicker">--today</div>
-  <h2>BiteExpress today</h2>
-  <div class="diagram">
-    <pre class="mermaid">
-flowchart LR
-  Apps[Mobile_and_web]
-  Mono[One_backend_many_copies]
-  DB[(SQL_databases)]
-  Pay[Payment_provider]
-  Apps --> Mono
-  Mono --> DB
-  Mono --> Pay
-    </pre>
-  </div>
-  <div class="diagram-note">On-prem in Gurugram. Several SQL copies, some kept in sync. Peak hours are the pain. Cloud and India data rules come later. I did not touch payments.</div>
+  <div class="kicker">today</div>
+  <h2>What is hitting BiteExpress</h2>
+  <ul class="big-list">
+    <li><span class="bullet red">peak</span> At lunch and dinner the restaurant list on the Gurugram monolith is slow. People leave before they pick a place.</li>
+    <li><span class="bullet red">revenue</span> If the list fails, checkout never starts. Payments never see that order. We lose money on a read, not on a charge.</li>
+    <li><span class="bullet yel">blast</span> Consumer apps, the partner portal, riders, and dashboards share one backend. A hot list slows everything else.</li>
+    <li><span class="bullet yel">gap</span> Some SQL copies already exist, and payments are already outside. Discovery is still inside, so copies do not save the lunch list.</li>
+  </ul>
 </div>
 
 <div class="slide left" id="s3">
-  <div class="kicker">--what-i-built</div>
-  <h2>What is running</h2>
+  <div class="kicker">today</div>
+  <h2>Why the list fails</h2>
   <div class="diagram">
     <pre class="mermaid">
-flowchart LR
-  UI[Page_at_slash]
-  API[Quarkus_API]
-  Mongo[(Mongo_7)]
-  CSV[Zomato_CSV]
-  UI --> API
-  API --> Mongo
-  CSV --> API
+flowchart TB
+  apps["Consumer apps"]
+  portal["Partner portal"]
+  riders["Riders and dashboards"]
+  mono["Monolith in Gurugram"]
+  pay["Payments — already out"]
+  sql[("SQL source of record")]
+  sql2[("SQL copies")]
+  apps --> mono
+  portal --> mono
+  riders --> mono
+  mono --> sql
+  mono --> pay
+  sql -.-> sql2
     </pre>
   </div>
-  <ul class="big-list">
-    <li><span class="bullet">[IN]</span> Create, get by id, list, sentence search. Small web page. Tests. Docker Compose.</li>
-    <li><span class="bullet yel">[NOT]</span> Orders, payments, live copy from SQL, Atlas. Those are notes only.</li>
-  </ul>
+  <div class="diagram-note">The list, partner writes, and checkout share that backend. Moving to Atlas in year three does not fix tonight’s dinner rush.</div>
 </div>
 
 <div class="slide left" id="s4">
-  <div class="kicker">--reads</div>
-  <h2>Four things the app needs to do</h2>
-  <div class="diagram">
-    <pre class="mermaid">
-flowchart TB
-  idQ[Get_one_by_id]
-  listQ[List_by_city_cuisine_rating]
-  nearQ[Nearest_places]
-  sentQ[Sentence_like_best_in_Gurgaon]
-    </pre>
+  <div class="kicker">journey</div>
+  <h2>How I would get there</h2>
+  <div class="timeline">
+    <div class="tl now">
+      <div class="wh-l">now</div>
+      <p>Monolith in Gurugram. List fails at peak. This repo proves the document and the read API. It is not in production.</p>
+    </div>
+    <div class="tl y1">
+      <div class="wh-l">6–12 months</div>
+      <p>Consumers read Mongo. Partners still write SQL. Checkout stays on the monolith. SQL remains source of record.</p>
+    </div>
+    <div class="tl y2">
+      <div class="wh-l">2–3 years</div>
+      <p>Atlas in India, then other countries. Portal writes restaurants here. Then menus, then orders. Payments stay with the provider.</p>
+    </div>
   </div>
-  <div class="diagram-note">Sentence search is not a second database. It turns into the same list filters.</div>
+  <div class="diagram-note">I will not wait for cloud to stop the bounce, and I will not empty the monolith to stop it either. Discovery is a coexistence slice.</div>
 </div>
 
 <div class="slide left" id="s5">
-  <div class="kicker">--document</div>
-  <h2>One <span class="accent-g">restaurants</span> collection</h2>
-  <div class="split">
-    <div class="col-diagram">
-      <pre class="schema" style="opacity:1"><span class="k">_id</span>:        <span class="n">18241590</span>
-<span class="k">name</span>:       <span class="s">"Sagar Ratna"</span>
-<span class="k">city</span>:       <span class="s">"Gurgaon"</span>
-<span class="k">countryCode</span>:<span class="n"> 1</span>
-<span class="k">cuisines</span>:   [<span class="s">"South Indian"</span>]
-<span class="k">location</span>: {
-  <span class="k">type</span>: <span class="s">"Point"</span>,
-  <span class="k">coordinates</span>: [<span class="n">77.05</span>, <span class="n">28.47</span>]
-}
-<span class="k">rating</span>: { <span class="k">aggregate</span>: <span class="n">4.2</span>, <span class="k">votes</span>: <span class="n">1840</span> }
-<span class="k">flags</span>:  { <span class="k">onlineDelivery</span>: true }
-<span class="k">avgCostForTwo</span>: <span class="n">900</span></pre>
-    </div>
-    <div class="col-text">
-      <ul class="big-list">
-        <li><span class="bullet">[ID]</span> Same id as the old system, so copies from SQL don’t create duplicates.</li>
-        <li><span class="bullet">[NEST]</span> Rating and flags stay on the restaurant. Always shown together.</li>
-        <li><span class="bullet">[GEO]</span> Location is a point. Longitude first.</li>
-      </ul>
-    </div>
-  </div>
+  <div class="kicker">why this, why mongo</div>
+  <h2>Why discovery, and why MongoDB</h2>
+  <ul class="big-list">
+    <li><span class="bullet">first</span> Discovery is the hottest read. If it is slow the order never starts, so I move that read without touching checkout.</li>
+    <li><span class="bullet">mongo</span> Nearby, city, rating, and cuisines sit on one restaurant document. A SQL replica still fights geo and the card shape. Redis does not become the catalogue.</li>
+    <li><span class="bullet cyan">peak</span> A replica set lets the list read a secondary. That is how we take lunch off the primary, not by adding Java threads.</li>
+    <li><span class="bullet yel">later</span> The same document is what Atlas Search and a country cluster will use. Picking Mongo only for year one would force a second store.</li>
+  </ul>
 </div>
 
 <div class="slide left" id="s6">
-  <div class="kicker">--distance</div>
-  <h2>Finding places nearby</h2>
-  <div class="diagram">
-    <pre class="mermaid">
-flowchart LR
-  Phone[User_lat_lng]
-  Near[geoNear_first]
-  Idx[location_index]
-  Out[results_plus_km]
-  Phone --> Near
-  Idx --> Near
-  Near --> Out
-    </pre>
+  <div class="kicker">6–12 months</div>
+  <h2>Short-term plan</h2>
+  <div class="wh">
+    <div class="wh-card">
+      <div class="wh-l">what</div>
+      <p>Consumer list, nearby, and search run on a Mongo replica set. The partner portal still writes SQL.</p>
+    </div>
+    <div class="wh-card">
+      <div class="wh-l">why</div>
+      <p>Take the peak read off the monolith so a slow list stops costing orders this year.</p>
+    </div>
+    <div class="wh-card">
+      <div class="wh-l">how</div>
+      <p>Copy restaurant rows by the existing id. Dual-write is out: a partner save must not depend on Mongo being up.</p>
+    </div>
+    <div class="wh-card">
+      <div class="wh-l">when</div>
+      <p>Stream, replica set, shadow compare, then flip consumer reads. Done inside twelve months.</p>
+    </div>
   </div>
-  <div class="diagram-note">Mongo does the distance. I did not calculate it in Java — that would skip the index. The location index has to exist before this runs.</div>
 </div>
 
 <div class="slide left" id="s7">
-  <div class="kicker">--indexes</div>
-  <h2>Indexes match the list screen</h2>
-  <ul class="big-list">
-    <li><span class="bullet">[1]</span> city + rating — “Gurgaon, best first”</li>
-    <li><span class="bullet">[2]</span> cuisines + city</li>
-    <li><span class="bullet cyan">[3]</span> location — nearby</li>
-    <li><span class="bullet cyan">[4]</span> text on name / cuisines / locality — until Atlas Search</li>
-  </ul>
+  <div class="kicker">6–12 months</div>
+  <h2>Year one coexistence</h2>
+  <div class="diagram">
+    <pre class="mermaid">
+flowchart TB
+  portal["Partner portal"]
+  apps["Consumer apps"]
+  mono["Monolith — orders and writes"]
+  pay["Payments"]
+  api["Discovery API"]
+  sql[("SQL still source of record")]
+  copy["Copy on restaurant id"]
+  mongo[("Mongo replica set")]
+  portal --> mono
+  mono --> pay
+  mono --> sql
+  sql --> copy --> mongo
+  apps -->|"list, nearby, search"| api
+  api --> mongo
+    </pre>
+  </div>
+  <div class="diagram-note">If Mongo is a few seconds behind, orders still work. Discovery may be stale. Checkout may not be down. That is the cutover rule.</div>
 </div>
 
 <div class="slide left" id="s8">
-  <div class="kicker">--list-query</div>
-  <h2>How a list call runs</h2>
-  <div class="diagram">
-    <pre class="mermaid">
-flowchart LR
-  Req[HTTP_filters]
-  Step1[near_or_match]
-  Step2[sort]
-  Step3[page]
-  Step4[count]
-  Req --> Step1 --> Step2 --> Step3
-  Step1 --> Step4
-    </pre>
-  </div>
-  <div class="diagram-note">If the user sent a location, nearby runs first. The count for that page is taken from the same filtered set, not a separate unfiltered count.</div>
-</div>
-
-<div class="slide left" id="s9">
-  <div class="kicker">--sentences</div>
-  <h2>Sentence search</h2>
-  <div class="diagram">
-    <pre class="mermaid">
-flowchart LR
-  Q["best South Indian in Gurgaon"]
-  P[small_parser]
-  F[city_cuisine_sort]
-  M[same_list_query]
-  Q --> P --> F --> M
-    </pre>
-  </div>
-  <div class="diagram-note">Covers the three examples in the brief. Atlas Search would replace the parser later. No chat model in the demo.</div>
-</div>
-
-<div class="slide left" id="s10">
-  <div class="kicker">--http</div>
-  <h2>HTTP</h2>
+  <div class="kicker">6–12 months</div>
+  <h2>Sequence in that year</h2>
   <ul class="big-list">
-    <li><span class="bullet">POST</span> <code>/v1/restaurants</code></li>
-    <li><span class="bullet">GET</span> <code>/v1/restaurants/{id}</code></li>
-    <li><span class="bullet">GET</span> <code>/v1/restaurants</code> — city, cuisine, rating, lat/lng, sort</li>
-    <li><span class="bullet cyan">GET</span> <code>/v1/restaurants/search?q=</code></li>
+    <li><span class="bullet">now</span> Keep this API and this document. The Mongo <code>_id</code> is the Restaurant ID the portal already uses, so a retry cannot create a second place.</li>
+    <li><span class="bullet">1–3 m</span> Stream from Gurugram SQL into Mongo. Stand up a replica set so the list can read a secondary. The single Docker node is only the demo.</li>
+    <li><span class="bullet cyan">3–6 m</span> Shadow a slice of list, nearby, and search against the old endpoint. Compare counts, ids, and distances, then flip consumer search.</li>
+    <li><span class="bullet cyan">6–12 m</span> Watch indexes and deep pages. Scale the database first. A cursor or a first-page cache only after we measure a hot path.</li>
   </ul>
 </div>
 
+<div class="slide left" id="s9">
+  <div class="kicker">data model</div>
+  <h2>One document for both clocks</h2>
+  <div class="split">
+    <div class="col-diagram">
+      <pre class="schema" style="opacity:1"><span class="k">_id</span>           existing restaurant id
+<span class="k">location</span>      geo point
+<span class="k">rating</span>        nested on the card
+<span class="k">cuisines</span>      string array
+<span class="k">flags</span>         booking / delivery
+<span class="k">countryCode</span>   cluster route later
+<span class="k">avgCostForTwo</span></pre>
+    </div>
+    <div class="col-text">
+      <ul class="big-list">
+        <li><span class="bullet">id</span> Same key for the SQL copy now and the portal write flip later. I will not renumber restaurants.</li>
+        <li><span class="bullet">geo</span> Nearby runs in Mongo, not in Java. The lunch card is this document, not a join.</li>
+        <li><span class="bullet yel">later</span> <code>countryCode</code> is on the document now so we do not backfill the whole collection when a second country opens.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="slide left" id="s10">
+  <div class="kicker">2–3 years</div>
+  <h2>Long-term plan</h2>
+  <div class="wh">
+    <div class="wh-card later">
+      <div class="wh-l">what</div>
+      <p>Restaurants become source of record on Atlas. Then menus. Then orders. Payments stay with the current provider.</p>
+    </div>
+    <div class="wh-card later">
+      <div class="wh-l">why</div>
+      <p>Cloud, more countries, and residency rules. A Gurugram SQL estate cannot be that store.</p>
+    </div>
+    <div class="wh-card later">
+      <div class="wh-l">how</div>
+      <p>Same API, Atlas connection, then portal writes here and the SQL copy stops. <code>countryCode</code> picks the cluster.</p>
+    </div>
+    <div class="wh-card later">
+      <div class="wh-l">when</div>
+      <p>Atlas after reads are stable. Write flip after Atlas. Next domain only after restaurants are done.</p>
+    </div>
+  </div>
+</div>
+
 <div class="slide left" id="s11">
-  <div class="kicker">--next-to-old-system</div>
-  <h2>Beside the old backend</h2>
+  <div class="kicker">2–3 years</div>
+  <h2>Restaurants finish moving</h2>
   <div class="diagram">
     <pre class="mermaid">
-flowchart LR
-  Partner[Partner_site]
-  Old[Old_backend]
-  SQL[(SQL)]
-  Copy[Copy_restaurant_rows]
-  New[This_API]
-  Mongo[(Mongo)]
-  Partner --> Old --> SQL
-  SQL --> Copy --> Mongo
-  New --> Mongo
+flowchart TB
+  portal["Partner portal"]
+  apps["Consumer apps"]
+  api["Same discovery API"]
+  india[("Atlas India")]
+  other[("Atlas other countries")]
+  mono["Monolith — orders only"]
+  pay["Payments"]
+  portal -->|"restaurant writes"| api
+  apps -->|"search"| api
+  api --> india
+  api -.-> other
+  apps -->|"checkout"| mono
+  mono --> pay
     </pre>
   </div>
-  <div class="diagram-note">SQL stays the place partners write. Mongo is what search reads. If SQL is ahead of Mongo, replay the copy. Don’t write both in one request unless there’s a queue in between.</div>
+  <div class="diagram-note">The API contract stays. Atlas Search replaces the year-one parser on the same collection. Checkout still goes to the old backend until orders have their own design.</div>
 </div>
 
 <div class="slide left" id="s12">
-  <div class="kicker">--busy-hours</div>
-  <h2>Busy hours</h2>
-  <div class="diagram">
-    <pre class="mermaid">
-flowchart TB
-  Peak[Lunch_traffic]
-  Peak --> A[location_index_missing]
-  Peak --> B[skip_too_far]
-  Peak --> C[one_Mongo_process]
-    </pre>
-  </div>
-  <div class="diagram-note">Those three fail before Java threads do. Next steps: don’t skip huge offsets, read copies of Mongo, cache only after we see real load.</div>
+  <div class="kicker">2–3 years</div>
+  <h2>Cloud, residency, and security</h2>
+  <ul class="big-list">
+    <li><span class="bullet">india</span> First Atlas cluster is India. Encryption at rest and backups come with it. Gurugram Mongo goes away.</li>
+    <li><span class="bullet">residency</span> <code>countryCode</code> routes to a cluster. Code 1 stays in India. A new country is a cluster and a routing rule, not a branch in the resource.</li>
+    <li><span class="bullet cyan">catalogue</span> This collection is public restaurant data. Search coordinates are a query parameter and are never stored. Diner profiles never land here.</li>
+    <li><span class="bullet cyan">access</span> Partner login stays on the portal. This API stays a catalogue on the platform network. I add keys only if it is exposed beyond that.</li>
+  </ul>
 </div>
 
 <div class="slide left" id="s13">
-  <div class="kicker">--india-data</div>
-  <h2>Keeping India data in India</h2>
+  <div class="kicker">2–3 years</div>
+  <h2>Then the same pattern again</h2>
   <div class="diagram">
     <pre class="mermaid">
 flowchart LR
-  Doc["countryCode = 1"]
-  Uri[Mongo_in_India]
-  Doc --> Uri
+  R["Restaurants"]
+  M["Menus"]
+  O["Orders"]
+  Rd["Riders"]
+  R --> M --> O --> Rd
     </pre>
   </div>
-  <div class="diagram-note">The field is already on the document. Later that’s a different cluster, not an if in the Java code. This collection is restaurants, not diner profiles.</div>
+  <div class="diagram-note">Each domain: read model, copy while SQL still writes, shadow, flip reads, then move the writer. Orders last because they sit next to payments. The monolith is gone when the last writer has a home.</div>
 </div>
 
 <div class="slide left" id="s14">
-  <div class="kicker">--code</div>
-  <h2>Packages</h2>
-  <div class="diagram">
-    <pre class="mermaid">
-flowchart TB
-  Api[api_HTTP]
-  Svc[service]
-  Dom[restaurant_document]
-  Repo[repo]
-  Mongo[(Mongo)]
-  Api --> Svc
-  Svc --> Dom
-  Svc --> Repo
-  Repo --> Mongo
-    </pre>
-  </div>
-  <div class="diagram-note">A test checks that HTTP code doesn’t call Mongo directly. Quarkus on Java 21. Tests start their own Mongo.</div>
+  <div class="kicker">trade-offs</div>
+  <h2>Calls I will defend</h2>
+  <ul class="big-list">
+    <li><span class="bullet">truth</span> SQL is source of record in year one because a failed Mongo write must not roll back a partner save. After the write flip, Mongo is truth and the copy stops.</li>
+    <li><span class="bullet">sync</span> Copy from the SQL log and retry from the offset. Dual-write only if measured lag is itself losing the list — and then with an outbox.</li>
+    <li><span class="bullet cyan">peak</span> Replica set and indexes first. I will not scale Java threads to hide a missing secondary, and I will not add a cache before we see a hot key.</li>
+    <li><span class="bullet yel">cut</span> No big-bang, no Atlas on day one, no orders in this slice. Discovery can lag. Checkout cannot.</li>
+  </ul>
 </div>
 
 <div class="slide left" id="s15">
-  <div class="kicker">--later</div>
-  <h2>If we moved this to Atlas</h2>
-  <div class="diagram">
-    <pre class="mermaid">
-flowchart LR
-  Now[Docker_Mongo_7]
-  Later[Atlas]
-  Now -->|same_documents| Later
-    </pre>
-  </div>
-  <div class="diagram-note">Same API. Add copies, backups, and Atlas Search. Copy from SQL until they stop writing there.</div>
-</div>
-
-<div class="slide left" id="s16">
-  <div class="kicker">--built-schema-demo</div>
-  <h2>What to open in the <span class="accent-g">demo</span></h2>
-  <div class="split">
-    <div class="col-text">
-      <ul class="big-list">
-        <li><span class="bullet">[RUN]</span> <code>./gradlew quarkusDev</code> or <code>docker compose up</code></li>
-        <li><span class="bullet">[UI]</span> http://localhost:8080/</li>
-        <li><span class="bullet cyan">[API]</span> Swagger at <code>/q/swagger-ui</code></li>
-        <li><span class="bullet cyan">[STACK]</span> Java 21, Quarkus, Gradle, Mongo 7</li>
-      </ul>
-    </div>
-    <div class="col-diagram">
-      <pre class="schema" style="opacity:1"><span class="k">Java</span>     21
-<span class="k">App</span>      Quarkus REST
-<span class="k">Build</span>    Gradle
-<span class="k">Store</span>    MongoDB 7
-<span class="k">Coll</span>     restaurants
-<span class="k">_id</span>      Restaurant ID
-<span class="k">Geo</span>      Point + location index
-<span class="k">Tests</span>    unit / API / package rules</pre>
-    </div>
-  </div>
+  <div class="kicker">close</div>
+  <h2>What I am recommending</h2>
+  <p class="big-quote">Peel restaurant search this year. Live next to SQL. Move the writer to Atlas when reads are stable, then repeat for menus and orders.</p>
+  <ul class="big-list">
+    <li><span class="bullet">debate</span> When SQL stops being truth, how much lag we accept, and when orders get their own store — that is the follow-up.</li>
+    <li><span class="bullet yel">running</span> The POC is list, nearby, and search on this document. It is not wired to the monolith. <code>./gradlew quarkusDev</code> · plan in fda-architecture.md</li>
+  </ul>
 </div>
 
 <div id="progress"></div>
 <div id="statusbar">
-  <span id="s-mode">Take-home</span>
+  <span id="s-mode">FDA</span>
   <span id="s-file">BiteExpress</span>
   <div class="right">
     <span id="s-step"></span>
-    <span id="s-pos">1/16</span>
-    <span>UTF-8</span>
+    <span id="s-pos">1/15</span>
   </div>
 </div>
 
@@ -594,45 +590,7 @@ function getStatics(s) {
   return Array.from(s.querySelectorAll('.kicker, h1, h2, .sub, .diagram, .diagram-note, .big-quote, .schema'));
 }
 function getSteps(s) {
-  return Array.from(s.querySelectorAll('.big-list li, .pill'));
-}
-
-const CHARS = '!@#$%^&*<>?/\\|[]{}~ABCDEFabcdef0123456789';
-function getTextNodes(el) {
-  const nodes = [];
-  const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-  while (walk.nextNode()) nodes.push(walk.currentNode);
-  return nodes;
-}
-function scramble(el, delay = 0) {
-  if (delay) {
-    el.style.opacity = 0;
-    setTimeout(() => { el.style.opacity = 1; scramble(el, 0); }, delay * 1000);
-    return;
-  }
-  const textNodes = getTextNodes(el);
-  const originals = textNodes.map(n => n.textContent);
-  const totalLen = originals.reduce((s, t) => s + t.length, 0);
-  let frame = 0;
-  const totalFrames = 18;
-  el.style.opacity = 1;
-  const id = setInterval(() => {
-    if (frame >= totalFrames) {
-      textNodes.forEach((n, i) => n.textContent = originals[i]);
-      clearInterval(id); return;
-    }
-    const progress = frame / totalFrames;
-    let charIdx = 0;
-    textNodes.forEach((n, i) => {
-      n.textContent = originals[i].split('').map(ch => {
-        const p = charIdx++ / totalLen;
-        return ch === ' ' || ch === '\n' ? ch :
-          p < progress ? ch :
-          CHARS[Math.floor(Math.random() * CHARS.length)];
-      }).join('');
-    });
-    frame++;
-  }, 35);
+  return Array.from(s.querySelectorAll('.big-list li, .wh-card, .tl'));
 }
 
 function enterSlide(slide, dir) {

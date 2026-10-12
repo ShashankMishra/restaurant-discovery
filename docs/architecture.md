@@ -6,6 +6,8 @@ Immediate pain (6–12 months) is peak-hour reliability. The 2–3 year story is
 
 This repo is only **restaurant discovery**. Orders and payments stay on the monolith. That is a strangler slice, not a rewrite.
 
+The FDA plan for the next 6–12 months, and the later full migration, is [fda-architecture.md](fda-architecture.md).
+
 ```
 today:  apps -> monolith -> RDBMS (Gurugram)
 
@@ -40,4 +42,4 @@ Covering indexes are in `MongoIndexCreator`. `$geoNear` is first in the pipeline
 
 ## This codebase
 
-Quarkus 3, Java 21, Gradle, layered packages (`api` / `service` / `domain` / `repo`). JVM container. Details in the ADRs.
+Quarkus 3, Java 21, Gradle, layered packages (`api` / `service` / `domain` / `repo`). JVM container. [ADR-001](adr/001-quarkus-over-spring.md) and [ADR-008](adr/008-layered-not-hexagonal.md). The full set is in [README.md](README.md).

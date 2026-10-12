@@ -1,5 +1,7 @@
 # Testing
 
+Needs JDK 21 and Docker. See [setup.md](setup.md).
+
 ```bash
 ./gradlew test
 ```

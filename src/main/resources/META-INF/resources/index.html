@@ -102,6 +102,10 @@
             <input id="minRating" name="minRating" type="number" min="0" max="5" step="0.1" placeholder="4" />
           </label>
           <label>
+            Max cost for two
+            <input id="maxCostForTwo" name="maxCostForTwo" type="number" min="0" step="1" placeholder="1000" />
+          </label>
+          <label>
             Within km
             <input id="maxDistanceKm" name="maxDistanceKm" type="number" min="0" step="0.1" placeholder="10" />
           </label>
@@ -168,12 +172,12 @@
             <input id="add-cuisines" name="cuisines" placeholder="Cafe, North Indian" />
           </label>
           <label>
-            Rating (0–5)
-            <input id="add-rating" name="averageRating" type="number" min="0" max="5" step="0.1" placeholder="4.2" />
-          </label>
-          <label>
             Cost for two
             <input id="add-cost" name="avgCostForTwo" type="number" min="0" step="1" placeholder="800" />
+          </label>
+          <label>
+            Currency
+            <input id="add-currency" name="currency" placeholder="Rs." value="Rs." />
           </label>
         </div>
         <div class="row">
@@ -184,10 +188,6 @@
           <label>
             Longitude
             <input id="add-lng" name="longitude" type="number" min="-180" max="180" step="any" placeholder="77.03" />
-          </label>
-          <label>
-            Currency
-            <input id="add-currency" name="currency" placeholder="Rs." value="Rs." />
           </label>
         </div>
         <div class="checks">

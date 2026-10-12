@@ -2,23 +2,15 @@
 
 Restaurant search API on MongoDB, plus a thin page at `/` that calls it. How this sits next to BiteExpress's on-prem monolith is in the docs.
 
-## Local run (dev)
+## Run with Docker
 
-Need **JDK 21** and **Docker** (Quarkus Dev Services starts `mongo:7`).
-
-1. If `java -version` is 8, point `JAVA_HOME` at 21 (Gradle also has a 21 toolchain):
+Docker is the only install. It builds the API and starts Mongo.
 
 ```bash
-export JAVA_HOME="$(/usr/libexec/java_home -v 21)"
+docker compose up --build
 ```
 
-2. Start the app:
-
-```bash
-./gradlew quarkusDev
-```
-
-Wait for `Listening on: http://localhost:8080`, then:
+Wait until the API is up, then:
 
 | What | URL |
 |---|---|
@@ -28,17 +20,23 @@ Wait for `Listening on: http://localhost:8080`, then:
 
 First boot loads `src/main/resources/data/zomato.csv` if the collection is empty.
 
-Stop with Ctrl+C. More detail: [docs/setup.md](docs/setup.md). Example calls: [docs/demo.md](docs/demo.md).
+Mongo is not published on the host. Wipe data with `docker compose down -v`.
 
-## Local run (Compose)
+## Run locally
+
+Install **JDK 21** (`java -version` reports 21) and **Docker**. Then:
 
 ```bash
-docker compose up --build
+./gradlew quarkusDev
 ```
 
-Same URLs on port 8080. Mongo is not published on the host. Wipe data with `docker compose down -v`.
+Same URLs. Quarkus Dev Services starts `mongo:7`. Stop with Ctrl+C.
+
+More detail: [docs/setup.md](docs/setup.md). Example calls: [docs/demo.md](docs/demo.md).
 
 ## Tests
+
+Install JDK 21, then:
 
 ```bash
 ./gradlew test

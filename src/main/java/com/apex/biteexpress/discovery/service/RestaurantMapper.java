@@ -5,7 +5,6 @@ import com.apex.biteexpress.discovery.api.dto.RestaurantDetail;
 import com.apex.biteexpress.discovery.api.dto.RestaurantSummary;
 import com.apex.biteexpress.discovery.config.CountryNames;
 import com.apex.biteexpress.discovery.domain.GeoPoint;
-import com.apex.biteexpress.discovery.domain.Rating;
 import com.apex.biteexpress.discovery.domain.Restaurant;
 import com.apex.biteexpress.discovery.domain.RestaurantFlags;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -35,7 +34,6 @@ public class RestaurantMapper {
             Boolean.TRUE.equals(req.tableBooking()),
             Boolean.TRUE.equals(req.onlineDelivery()),
             Boolean.TRUE.equals(req.deliveringNow()));
-    r.rating = new Rating(req.averageRating(), req.votes(), req.ratingText());
     if (req.latitude() != null
         && req.longitude() != null
         && isValidCoord(req.longitude(), req.latitude())) {
@@ -88,6 +86,8 @@ public class RestaurantMapper {
         d.getString("country"),
         cuisines,
         rating == null ? null : asDouble(rating.get("aggregate")),
+        asInt(d.get("avgCostForTwo")),
+        d.getString("currency"),
         distanceKm);
   }
 
@@ -104,5 +104,9 @@ public class RestaurantMapper {
 
   private static Double asDouble(Object v) {
     return v instanceof Number n ? n.doubleValue() : null;
+  }
+
+  private static Integer asInt(Object v) {
+    return v instanceof Number n ? n.intValue() : null;
   }
 }

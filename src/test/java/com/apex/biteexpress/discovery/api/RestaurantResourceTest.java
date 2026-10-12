@@ -5,11 +5,17 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
 
+import com.apex.biteexpress.discovery.domain.GeoPoint;
+import com.apex.biteexpress.discovery.domain.Rating;
+import com.apex.biteexpress.discovery.domain.Restaurant;
 import com.apex.biteexpress.discovery.repo.RestaurantRepository;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import jakarta.inject.Inject;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +23,8 @@ import org.junit.jupiter.api.Test;
 class RestaurantResourceTest {
 
   @Inject RestaurantRepository restaurants;
+
+  private final AtomicLong ids = new AtomicLong(1_000);
 
   @BeforeEach
   void clean() {
@@ -40,6 +48,7 @@ class RestaurantResourceTest {
                   "city": "Gurgaon",
                   "address": "Sector 29",
                   "cuisines": ["South Indian"],
+                  "avgCostForTwo": 800,
                   "averageRating": 4.2,
                   "latitude": 28.4595,
                   "longitude": 77.0266
@@ -51,6 +60,8 @@ class RestaurantResourceTest {
             .statusCode(201)
             .body("name", equalTo("Test Dosa House"))
             .body("country", equalTo("India"))
+            .body("averageRating", nullValue())
+            .body("avgCostForTwo", equalTo(800))
             .extract()
             .jsonPath()
             .getLong("id");
@@ -99,7 +110,26 @@ class RestaurantResourceTest {
         .statusCode(200)
         .body("total", equalTo(1))
         .body("items[0].name", equalTo("Naivedyam"))
-        .body("items[0].city", equalTo("Gurgaon"));
+        .body("items[0].city", equalTo("Gurgaon"))
+        .body("items[0].avgCostForTwo", equalTo(700));
+  }
+
+  @Test
+  void listFiltersByMaxCostForTwo() {
+    seed("Cheap Thali House", "Gurgaon", "North Indian", 3.2, 400, 28.4560, 77.0298);
+    seed("Barbeque Nation", "Gurgaon", "North Indian", 4.5, 2500, 28.4672, 77.0644);
+
+    given()
+        .queryParam("city", "Gurgaon")
+        .queryParam("maxCostForTwo", 1000)
+        .when()
+        .get("/v1/restaurants")
+        .then()
+        .statusCode(200)
+        .body("total", equalTo(1))
+        .body("items[0].name", equalTo("Cheap Thali House"))
+        .body("items[0].avgCostForTwo", equalTo(400))
+        .body("items[0].currency", equalTo("Rs."));
   }
 
   @Test
@@ -174,25 +204,19 @@ class RestaurantResourceTest {
       int costForTwo,
       double lat,
       double lng) {
-    given()
-        .contentType(ContentType.JSON)
-        .body(
-            """
-            {
-              "name": "%s",
-              "city": "%s",
-              "address": "test",
-              "cuisines": ["%s"],
-              "averageRating": %s,
-              "avgCostForTwo": %s,
-              "latitude": %s,
-              "longitude": %s
-            }
-            """
-                .formatted(name, city, cuisine, rating, costForTwo, lat, lng))
-        .when()
-        .post("/v1/restaurants")
-        .then()
-        .statusCode(201);
+    Restaurant restaurant = new Restaurant();
+    restaurant.id = ids.incrementAndGet();
+    restaurant.name = name;
+    restaurant.nameLower = name.toLowerCase();
+    restaurant.city = city;
+    restaurant.address = "test";
+    restaurant.countryCode = 1;
+    restaurant.country = "India";
+    restaurant.cuisines = List.of(cuisine);
+    restaurant.avgCostForTwo = costForTwo;
+    restaurant.currency = "Rs.";
+    restaurant.rating = new Rating(rating, 10, null);
+    restaurant.location = new GeoPoint(lng, lat);
+    restaurants.persist(restaurant);
   }
 }

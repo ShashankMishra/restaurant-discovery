@@ -11,11 +11,13 @@ Base: `/v1`. JSON in and out. Field is `id`, never `_id`.
 
 ## List query params
 
-`name`, `city`, `cuisines` (comma-separated), `minRating`, `lat`, `lng`, `maxDistanceKm`, `sort` (`rating` \| `distance` \| `name`), `page` (default 1), `size` (default 20, max 100).
+`name`, `city`, `cuisines` (comma-separated), `minRating`, `maxCostForTwo`, `lat`, `lng`, `maxDistanceKm`, `sort` (`rating` \| `distance` \| `name`), `page` (default 1), `size` (default 20, max 100).
 
 Distance sort needs `lat` and `lng`. `$geoNear` is the first aggregation stage.
 
-List item: `id`, `name`, `address`, `city`, `country`, `cuisines`, `averageRating`, `distanceKm` (only when geo).
+List item: `id`, `name`, `address`, `city`, `country`, `cuisines`, `averageRating`, `avgCostForTwo`, `currency`, `distanceKm` (only when geo).
+
+Create does not accept a rating. `averageRating` on a new place stays empty until ingest or a later review flow sets it. A client that sends `averageRating` is ignored.
 
 ## Search
 

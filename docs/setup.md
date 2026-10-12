@@ -2,18 +2,15 @@
 
 ## Need
 
-- JDK 21 (Gradle toolchain is pinned to 21 even if `JAVA_HOME` is 8)
-- Docker (for Compose demo, or for tests/dev if Dev Services can pull `mongo:7`)
-- That's it. Gradle is the wrapper in the repo.
+- Docker. Compose builds the API image and starts Mongo.
+- JDK 21, only for `./gradlew` (local app or tests). `java -version` should report 21.
+- Gradle is the wrapper in the repo.
 
 ## Dev (fastest for a live tweak)
 
-Docker must be running. Then:
+Install JDK 21. Docker must be running. Then:
 
 ```bash
-# optional if the default `java` is still 8
-export JAVA_HOME="$(/usr/libexec/java_home -v 21)"
-
 ./gradlew quarkusDev
 ```
 

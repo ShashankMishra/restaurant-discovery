@@ -61,6 +61,7 @@ public class RestaurantResource {
       @QueryParam("city") String city,
       @QueryParam("cuisines") String cuisines,
       @QueryParam("minRating") Double minRating,
+      @QueryParam("maxCostForTwo") Integer maxCostForTwo,
       @QueryParam("lat") Double lat,
       @QueryParam("lng") Double lng,
       @QueryParam("maxDistanceKm") Double maxDistanceKm,
@@ -75,6 +76,7 @@ public class RestaurantResource {
           Arrays.stream(cuisines.split(",")).map(String::trim).filter(s -> !s.isEmpty()).toList();
     }
     query.minRating = minRating;
+    query.maxCostForTwo = maxCostForTwo;
     query.lat = lat;
     query.lng = lng;
     query.maxDistanceKm = maxDistanceKm;

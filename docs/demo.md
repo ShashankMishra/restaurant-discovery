@@ -1,6 +1,6 @@
 # Demo (about 10 minutes)
 
-Assume Compose or `quarkusDev` is up.
+Start the app from [setup.md](setup.md) (Compose or `quarkusDev`).
 
 1. Ready check
 
@@ -17,7 +17,7 @@ curl -s http://localhost:8080/q/health/ready
 ```bash
 curl -s -X POST http://localhost:8080/v1/restaurants \
   -H 'Content-Type: application/json' \
-  -d '{"name":"Live Edit Kitchen","city":"Gurgaon","cuisines":["Cafe"],"averageRating":4.0,"latitude":28.46,"longitude":77.03}'
+  -d '{"name":"Live Edit Kitchen","city":"Gurgaon","cuisines":["Cafe"],"avgCostForTwo":800,"latitude":28.46,"longitude":77.03}'
 ```
 
 5. Get by id (use the `id` from step 4)
