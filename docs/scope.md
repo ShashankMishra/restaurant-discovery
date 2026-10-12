@@ -1,6 +1,6 @@
 # Scope
 
-The brief says 3–5 hours and that finishing every line is not the point. I cut it this way.
+What is running, and what is only written down.
 
 ## In the running MVP
 

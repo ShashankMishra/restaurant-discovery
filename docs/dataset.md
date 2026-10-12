@@ -1,6 +1,6 @@
 # Dataset
 
-Source named in the brief: [Zomato Restaurants Data (Kaggle)](https://www.kaggle.com/datasets/himanshupatil/zomato-restaurants-data).
+Source: [Zomato Restaurants Data (Kaggle)](https://www.kaggle.com/datasets/himanshupatil/zomato-restaurants-data).
 
 The repo ships `src/main/resources/data/zomato.csv` — a **small cleaned sample**, Gurgaon-heavy, so Compose/demo/tests stay predictable. Swap in the full Kaggle file under the same path if you want the 9k-row ingest. Encoding is read as ISO-8859-1 because the Kaggle dump is often Latin-1.
 

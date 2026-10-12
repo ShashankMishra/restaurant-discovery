@@ -1,6 +1,6 @@
 # Commits
 
-Conventional Commits, the example from the brief.
+Conventional Commits.
 
 Format: `type: imperative summary` — no period, under 72 chars.
 

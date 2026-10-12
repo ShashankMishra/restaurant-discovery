@@ -40,7 +40,7 @@ curl -s 'http://localhost:8080/v1/restaurants?city=Gurgaon&cuisines=South%20Indi
 curl -s 'http://localhost:8080/v1/restaurants?lat=28.495&lng=77.088&sort=distance&maxDistanceKm=10'
 ```
 
-8. NL search (the three phrases from the brief)
+8. Natural-language search
 
 ```bash
 curl -s --get http://localhost:8080/v1/restaurants/search \

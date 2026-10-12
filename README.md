@@ -1,6 +1,6 @@
 # BiteExpress restaurant discovery
 
-MVP restaurant search API on MongoDB, plus a thin page at `/` that calls it. FDA take-home: working discovery endpoints and notes on how this would sit next to BiteExpress's on-prem monolith.
+Restaurant search API on MongoDB, plus a thin page at `/` that calls it. How this sits next to BiteExpress's on-prem monolith is in the docs.
 
 ## Local run (dev)
 
@@ -28,9 +28,9 @@ Wait for `Listening on: http://localhost:8080`, then:
 
 First boot loads `src/main/resources/data/zomato.csv` if the collection is empty.
 
-Stop with Ctrl+C. More detail: [docs/setup.md](docs/setup.md). Demo script: [docs/demo.md](docs/demo.md).
+Stop with Ctrl+C. More detail: [docs/setup.md](docs/setup.md). Example calls: [docs/demo.md](docs/demo.md).
 
-## Local run (Compose, closer to the interview demo)
+## Local run (Compose)
 
 ```bash
 docker compose up --build
@@ -51,6 +51,4 @@ See [docs/testing.md](docs/testing.md).
 
 ## Docs
 
-Walkthrough: [docs/fda-restaurant-discovery.html](docs/fda-restaurant-discovery.html) (open in a browser, space to advance).
-
-Index: [docs/README.md](docs/README.md).
+[docs/README.md](docs/README.md) — setup, API, architecture, and ADRs.

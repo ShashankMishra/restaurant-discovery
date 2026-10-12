@@ -28,7 +28,7 @@ Quarkus starts a Mongo 7 container by itself. Ingest runs once if the collection
 
 Ctrl+C stops the process. Dev Services Mongo goes away with it unless you keep the container.
 
-## Docker Compose (how I would demo)
+## Docker Compose
 
 ```bash
 docker compose up --build

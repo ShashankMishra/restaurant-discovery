@@ -4,25 +4,30 @@
 
 ## Context
 
-One HTTP API, one Mongo database, a follow-up that wants small live edits.
+One HTTP API comes in. One Mongo database is the store. A change to a filter should be a change to the query.
 
 ## Decision
 
-Packages: `api` → `service` → `domain` / `repo`. `ingest` is another adapter into `repo`. REST maps to records; Panache entities do not leave `service`.
+Packages are `api` → `service` → `domain` / `repo`. Ingest writes through `repo`. REST uses records. Panache entities stop at `service`.
 
-ArchUnit: `api` must not touch `repo`; `domain` must not depend on `api`/`service`/`repo`; `repo`/`ingest` must not depend on `api`.
+Hexagonal ports lose here because there is nothing for a port to switch. `RestaurantStore` would have one implementation. The request would follow the same path it follows now. Extract that interface when CDC is a second writer into the same model and HTTP create is no longer the only one. Until then a port is a type we would only mock.
 
-`service` *does* depend on `api.dto`. That is a known shortcut so I didn't add a second DTO module.
+The resource does not call Panache. The JSON must not be the Mongo entity, and a new filter must land in `RestaurantQueryService` rather than in the resource. `LayerRulesTest` fails the build if `api` reaches `repo`. The test records the rule. It is not the reason for the rule.
+
+`service` imports `api.dto` on purpose. A second set of records would mirror the create and list shapes for a single API. The cost is that the service is tied to those HTTP types and is not reusable without them. That is accepted while there is one API.
+
+ArchUnit also keeps `domain` free of `api`, `service`, `repo`, and `ingest`, and keeps `repo` and `ingest` free of `api`.
 
 ## Alternatives
 
-- **Hexagonal / ports:** I would extract `RestaurantStore` when CDC is a second inbound adapter. Doing it now is an interface with one impl.
-- **Resource talks to Panache:** fastest to type, ugly to test, and the first live edit will leak Mongo types into JSON.
+- **Hexagonal ports now:** the textbook split, and one implementation behind each port. Rejected because it does not change behaviour. Revisit when a second writer exists.
+- **Resource talks to Panache:** the fewest classes. Rejected because the HTTP type and the stored type become the same class, and every filter edit touches the resource.
+- **A dto module the service does not import from `api`:** stricter layering. Rejected as a second copy of the same fields. The shortcut stays until a second caller needs different types.
 
 ## Consequences
 
-Adding `minVotes` is a query-param plus a filter in `RestaurantQueryService`. No port wiring.
+A new filter such as `minVotes` is a query parameter and a condition in `RestaurantQueryService`. There is no port to register.
 
 ## Follow-up
 
-"Isn't this just MVC?" Yes, on purpose. The interesting architecture is the strangler and the document model, not a hexagonal folder tree with one adapter.
+This is layered on purpose. The split that has two sides is the document model and the CDC boundary (ADR-002, ADR-005), not a folder of ports with one adapter each.

@@ -18,6 +18,6 @@ Logs are the Quarkus console in dev. In Compose: `docker compose logs -f api`.
 
 **`sort=distance` → 400.** You didn't pass `lat` and `lng`. Same for NL "nearest" without coords.
 
-**Live follow-up edit.** `./gradlew quarkusDev` and change Java; don't rebuild the image unless they want to see Compose.
+**Editing while it runs.** `./gradlew quarkusDev` and change Java. Rebuild the image when Compose should pick up the change.
 
-JVM container is the demo. Native image is a later conversation, not something I would flip during the interview.
+Compose runs the JVM container. A native image is later, not part of this setup.
