@@ -36,6 +36,18 @@ public class RestaurantResource {
   }
 
   @GET
+  @Path("search")
+  @RunOnVirtualThread
+  public RestaurantPage search(
+      @QueryParam("q") String q,
+      @QueryParam("lat") Double lat,
+      @QueryParam("lng") Double lng,
+      @QueryParam("page") @DefaultValue("1") int page,
+      @QueryParam("size") @DefaultValue("20") int size) {
+    return restaurants.search(q, lat, lng, page, size);
+  }
+
+  @GET
   @Path("{id}")
   @RunOnVirtualThread
   public RestaurantDetail get(@PathParam("id") long id) {

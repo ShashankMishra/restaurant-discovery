@@ -17,6 +17,7 @@ public class RestaurantService {
   @Inject RestaurantRepository restaurants;
   @Inject RestaurantMapper mapper;
   @Inject RestaurantQueryService queries;
+  @Inject NaturalLanguageParser parser;
 
   public RestaurantDetail create(CreateRestaurantRequest req) {
     long id = req.id() == null ? restaurants.nextId() : req.id();
@@ -38,6 +39,13 @@ public class RestaurantService {
   }
 
   public RestaurantPage list(RestaurantQuery query) {
+    return queries.search(query);
+  }
+
+  public RestaurantPage search(String q, Double lat, Double lng, int page, int size) {
+    RestaurantQuery query = parser.parse(q, lat, lng);
+    query.page = page;
+    query.size = size;
     return queries.search(query);
   }
 }
