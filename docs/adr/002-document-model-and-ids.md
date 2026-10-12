@@ -42,4 +42,4 @@ CDC upserts are `replaceOne({_id})`. GET `/v1/restaurants/{id}` matches the sour
 
 Atlas Search is not a second collection. This process runs on Docker Mongo 7, which has no Atlas Search. ADR-004 is the stand-in.
 
-List accepts `maxCostForTwo` and returns `avgCostForTwo` on each row. `POST` does not accept a rating. Ingest from the CSV is what sets `rating`. A `reviews` collection is still only for when a diner writes a review.
+List accepts `maxCostForTwo` and returns `avgCostForTwo` on each row. `POST` accepts the same rating snapshot ingest writes (`averageRating`, `votes`, `ratingText`) so a demo create can be filtered and sorted with the city + rating index. A `reviews` collection is still only for when a diner writes a review.

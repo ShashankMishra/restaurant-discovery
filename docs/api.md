@@ -17,7 +17,7 @@ Distance sort needs `lat` and `lng`. `$geoNear` is the first aggregation stage.
 
 List item: `id`, `name`, `address`, `city`, `country`, `cuisines`, `averageRating`, `avgCostForTwo`, `currency`, `distanceKm` (only when geo).
 
-Create does not accept a rating. `averageRating` on a new place stays empty until ingest or a later review flow sets it. A client that sends `averageRating` is ignored.
+Create accepts an optional rating snapshot: `averageRating` (0–5), `votes`, and `ratingText`. They are stored as the nested `rating` on the restaurant, the same shape ingest writes, so a demo create can show up in a rating sort. Omitting them leaves `rating` empty. Per-diner reviews are still a later collection.
 
 ## Search
 

@@ -33,6 +33,9 @@ class RestaurantMapperTest {
             true,
             true,
             false,
+            null,
+            null,
+            null,
             0.0,
             0.0);
     Restaurant r = mapper.fromCreate(req, 99L);
@@ -44,6 +47,38 @@ class RestaurantMapperTest {
     RestaurantDetail d = mapper.toDetail(r);
     assertEquals(99L, d.id());
     assertNull(d.latitude());
+  }
+
+  @Test
+  void createStoresRatingSnapshot() {
+    CreateRestaurantRequest req =
+        new CreateRestaurantRequest(
+            null,
+            "Live Edit Kitchen",
+            null,
+            null,
+            "Gurgaon",
+            null,
+            List.of("Cafe"),
+            800,
+            null,
+            null,
+            null,
+            null,
+            null,
+            4.2,
+            12,
+            " Very Good ",
+            28.46,
+            77.03);
+    Restaurant r = mapper.fromCreate(req, 50L);
+    assertEquals(4.2, r.rating.aggregate);
+    assertEquals(12, r.rating.votes);
+    assertEquals("Very Good", r.rating.text);
+    RestaurantDetail d = mapper.toDetail(r);
+    assertEquals(4.2, d.averageRating());
+    assertEquals(12, d.votes());
+    assertEquals("Very Good", d.ratingText());
   }
 
   @Test

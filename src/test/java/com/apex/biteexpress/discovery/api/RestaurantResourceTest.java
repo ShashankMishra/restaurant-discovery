@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
 
 import com.apex.biteexpress.discovery.domain.GeoPoint;
 import com.apex.biteexpress.discovery.domain.Rating;
@@ -50,6 +49,8 @@ class RestaurantResourceTest {
                   "cuisines": ["South Indian"],
                   "avgCostForTwo": 800,
                   "averageRating": 4.2,
+                  "votes": 12,
+                  "ratingText": "Very Good",
                   "latitude": 28.4595,
                   "longitude": 77.0266
                 }
@@ -60,7 +61,9 @@ class RestaurantResourceTest {
             .statusCode(201)
             .body("name", equalTo("Test Dosa House"))
             .body("country", equalTo("India"))
-            .body("averageRating", nullValue())
+            .body("averageRating", equalTo(4.2f))
+            .body("votes", equalTo(12))
+            .body("ratingText", equalTo("Very Good"))
             .body("avgCostForTwo", equalTo(800))
             .extract()
             .jsonPath()
@@ -71,7 +74,8 @@ class RestaurantResourceTest {
         .get("/v1/restaurants/{id}", id)
         .then()
         .statusCode(200)
-        .body("id", equalTo((int) id));
+        .body("id", equalTo((int) id))
+        .body("averageRating", equalTo(4.2f));
   }
 
   @Test

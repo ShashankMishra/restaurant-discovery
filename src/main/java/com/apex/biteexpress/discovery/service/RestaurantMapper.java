@@ -5,6 +5,7 @@ import com.apex.biteexpress.discovery.api.dto.RestaurantDetail;
 import com.apex.biteexpress.discovery.api.dto.RestaurantSummary;
 import com.apex.biteexpress.discovery.config.CountryNames;
 import com.apex.biteexpress.discovery.domain.GeoPoint;
+import com.apex.biteexpress.discovery.domain.Rating;
 import com.apex.biteexpress.discovery.domain.Restaurant;
 import com.apex.biteexpress.discovery.domain.RestaurantFlags;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -34,6 +35,13 @@ public class RestaurantMapper {
             Boolean.TRUE.equals(req.tableBooking()),
             Boolean.TRUE.equals(req.onlineDelivery()),
             Boolean.TRUE.equals(req.deliveringNow()));
+    String ratingText = req.ratingText() == null ? null : req.ratingText().trim();
+    if (ratingText != null && ratingText.isEmpty()) {
+      ratingText = null;
+    }
+    if (req.averageRating() != null || req.votes() != null || ratingText != null) {
+      r.rating = new Rating(req.averageRating(), req.votes(), ratingText);
+    }
     if (req.latitude() != null
         && req.longitude() != null
         && isValidCoord(req.longitude(), req.latitude())) {

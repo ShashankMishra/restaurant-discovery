@@ -17,7 +17,7 @@ curl -s http://localhost:8080/q/health/ready
 ```bash
 curl -s -X POST http://localhost:8080/v1/restaurants \
   -H 'Content-Type: application/json' \
-  -d '{"name":"Live Edit Kitchen","city":"Gurgaon","cuisines":["Cafe"],"avgCostForTwo":800,"latitude":28.46,"longitude":77.03}'
+  -d '{"name":"Live Edit Kitchen","city":"Gurgaon","cuisines":["Cafe"],"avgCostForTwo":800,"averageRating":4.2,"latitude":28.46,"longitude":77.03}'
 ```
 
 5. Get by id (use the `id` from step 4)

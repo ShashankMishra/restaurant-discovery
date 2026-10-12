@@ -74,6 +74,8 @@ document.getElementById("add-form").addEventListener("submit", async (event) => 
   }
   const cost = value("add-cost");
   if (cost) body.avgCostForTwo = Number(cost);
+  const rating = value("add-rating");
+  if (rating) body.averageRating = Number(rating);
   const lat = value("add-lat");
   const lng = value("add-lng");
   if (lat) body.latitude = Number(lat);
