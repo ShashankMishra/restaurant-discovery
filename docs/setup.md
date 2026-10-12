@@ -31,6 +31,8 @@ Ctrl+C stops the process. Dev Services Mongo goes away with it unless you keep t
 docker compose up --build
 ```
 
+`docker-compose up --build` is the same command when the standalone binary is what is installed. Use that spelling for the reset command too.
+
 - API: `8080`
 - Mongo is not published on the host on purpose
 - Connection string inside the compose network: `mongodb://mongo:27017`

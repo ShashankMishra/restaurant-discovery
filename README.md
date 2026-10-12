@@ -10,6 +10,8 @@ Docker is the only install. It builds the API and starts Mongo.
 docker compose up --build
 ```
 
+`docker compose` is the Compose plugin. `docker-compose up --build` is the same command on an install that only has the standalone binary. Use that same spelling for `down` and `logs`.
+
 Wait until the API is up, then:
 
 | What | URL |

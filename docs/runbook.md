@@ -6,7 +6,7 @@
 | Ready (includes Mongo) | `/q/health/ready` |
 | Swagger | `/q/swagger-ui` |
 
-Logs are the Quarkus console in dev. In Compose: `docker compose logs -f api`.
+Logs are the Quarkus console in dev. In Compose: `docker compose logs -f api` (or `docker-compose logs -f api`).
 
 ## Things that actually happen
 
