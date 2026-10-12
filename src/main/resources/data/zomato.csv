@@ -1,0 +1,16 @@
+Restaurant ID,Restaurant Name,Country Code,City,Address,Locality,Locality Verbose,Longitude,Latitude,Cuisines,Average Cost for two,Currency,Has Table booking,Has Online delivery,Is delivering now,Switch to order menu,Price range,Aggregate rating,Rating color,Rating text,Votes
+18241590,Sagar Ratna,1,Gurgaon,Sector 14,Sector 14,Sector 14 Gurgaon,77.0490,28.4710,"South Indian, North Indian",900,Rs.,No,Yes,Yes,No,2,4.2,Dark Green,Very Good,1840
+18337892,Naivedyam,1,Gurgaon,DLF Phase 4,DLF Phase 4,DLF Phase 4 Gurgaon,77.0865,28.4688,"South Indian",700,Rs.,No,Yes,No,No,2,4.4,Dark Green,Very Good,920
+312645,Saravana Bhavan,1,Gurgaon,MG Road,MG Road,MG Road Gurgaon,77.0803,28.4790,"South Indian",1100,Rs.,Yes,Yes,No,No,3,4.1,Green,Very Good,2103
+18441484,Vada Pav Junction,1,Gurgaon,Sector 29,Sector 29,Sector 29 Gurgaon,77.0689,28.4595,"Vada Pav, Street Food, Fast Food",250,Rs.,No,Yes,Yes,No,1,4.0,Green,Very Good,412
+2100451,Gopala Dosa,1,Gurgaon,Cyber Hub,DLF Cyber City,DLF Cyber City Gurgaon,77.0881,28.4950,"South Indian",550,Rs.,No,Yes,No,No,2,3.9,Yellow,Good,301
+308322,Pizza Hut,1,Gurgaon,Ambience Mall,Ambience Mall,Ambience Mall Gurgaon,77.0960,28.5041,"Pizza, Fast Food",1200,Rs.,No,Yes,Yes,No,3,3.6,Yellow,Good,754
+18216919,Barbeque Nation,1,Gurgaon,Sector 29,Sector 29,Sector 29 Gurgaon,77.0644,28.4672,"North Indian, Mughlai",2500,Rs.,Yes,No,No,No,4,4.5,Dark Green,Excellent,3210
+18453900,Haldiram's,1,Gurgaon,Sector 14,Sector 14,Sector 14 Gurgaon,77.0462,28.4701,"North Indian, Street Food, Fast Food",500,Rs.,No,Yes,Yes,No,2,3.8,Yellow,Good,1188
+307448,Cafe Delhi Heights,1,Gurgaon,Cyber Hub,DLF Cyber City,DLF Cyber City Gurgaon,77.0890,28.4944,"Cafe, Continental, Italian",1600,Rs.,Yes,Yes,No,No,3,4.3,Dark Green,Very Good,1540
+900011,Cheap Thali House,1,Gurgaon,Old Gurgaon,Old Gurgaon,Old Gurgaon,77.0298,28.4560,"North Indian",400,Rs.,No,Yes,No,No,1,3.2,Orange,Average,88
+166680,Domino's Pizza,1,New Delhi,Connaught Place,Connaught Place,Connaught Place New Delhi,77.2170,28.6328,"Pizza, Fast Food",700,Rs.,No,Yes,Yes,No,2,3.7,Yellow,Good,640
+2101,Bukhara,1,New Delhi,ITC Maurya,Chanakyapuri,Chanakyapuri New Delhi,77.1735,28.5970,"North Indian, Mughlai",5000,Rs.,Yes,No,No,No,4,4.7,Dark Green,Excellent,8410
+18384227,Karavalli,1,Bangalore,The Gateway Hotel,Residency Road,Residency Road Bangalore,77.6080,12.9716,"South Indian, Seafood",2400,Rs.,Yes,No,No,No,4,4.6,Dark Green,Excellent,1902
+51040,Leopold Cafe,1,Mumbai,Colaba Causeway,Colaba,Colaba Mumbai,72.8331,18.9220,"Continental, Chinese, Fast Food",1800,Rs.,No,Yes,No,No,3,4.1,Green,Very Good,4721
+16680399,The Sassy Spoon,1,Pune,Koregaon Park,Koregaon Park,Koregaon Park Pune,73.8975,18.5362,"Continental, Cafe",1500,Rs.,Yes,Yes,No,No,3,4.2,Dark Green,Very Good,987
