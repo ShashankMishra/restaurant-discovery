@@ -2,6 +2,7 @@ package com.apex.biteexpress.discovery.service;
 
 import com.apex.biteexpress.discovery.api.dto.CreateRestaurantRequest;
 import com.apex.biteexpress.discovery.api.dto.RestaurantDetail;
+import com.apex.biteexpress.discovery.api.dto.RestaurantPage;
 import com.apex.biteexpress.discovery.domain.Restaurant;
 import com.apex.biteexpress.discovery.repo.RestaurantRepository;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -15,6 +16,7 @@ public class RestaurantService {
 
   @Inject RestaurantRepository restaurants;
   @Inject RestaurantMapper mapper;
+  @Inject RestaurantQueryService queries;
 
   public RestaurantDetail create(CreateRestaurantRequest req) {
     long id = req.id() == null ? restaurants.nextId() : req.id();
@@ -33,5 +35,9 @@ public class RestaurantService {
             .findByIdOptional(id)
             .orElseThrow(() -> new NotFoundException("restaurant not found: " + id));
     return mapper.toDetail(r);
+  }
+
+  public RestaurantPage list(RestaurantQuery query) {
+    return queries.search(query);
   }
 }
