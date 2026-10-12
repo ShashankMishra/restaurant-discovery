@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BiteExpress — find a place</title>
+    <link rel="stylesheet" href="/app.css" />
+  </head>
+  <body>
+    <header>
+      <p class="eyebrow">BiteExpress · discovery</p>
+      <h1>Find somewhere to eat</h1>
+      <p class="lede">
+        Search in a sentence, browse with filters, add a place, or open one by id. Same
+        <code>/v1/restaurants</code> APIs the mobile app would call.
+      </p>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="Actions">
+      <button type="button" role="tab" id="tab-search" aria-controls="panel-search" aria-selected="true">
+        Search
+      </button>
+      <button type="button" role="tab" id="tab-browse" aria-controls="panel-browse" aria-selected="false">
+        Browse
+      </button>
+      <button type="button" role="tab" id="tab-add" aria-controls="panel-add" aria-selected="false">
+        Add restaurant
+      </button>
+      <button type="button" role="tab" id="tab-lookup" aria-controls="panel-lookup" aria-selected="false">
+        Look up
+      </button>
+    </nav>
+
+    <section id="panel-search" role="tabpanel" aria-labelledby="tab-search">
+      <form id="search-form">
+        <label>
+          Sentence
+          <input
+            id="q"
+            name="q"
+            type="search"
+            placeholder="Best restaurants in Gurgaon with South Indian food"
+            required
+          />
+        </label>
+        <div class="chips" aria-label="Example searches">
+          <button type="button" class="chip" data-fill="q">Best restaurants in Gurgaon with South Indian Food</button>
+          <button type="button" class="chip" data-fill="q">Restaurants in Gurgaon under Rs. 1000 for two</button>
+          <button type="button" class="chip" data-fill="q" data-needs-point="true">
+            Nearest place that serves Vada Pav
+          </button>
+        </div>
+        <fieldset class="near">
+          <legend>Starting point</legend>
+          <p class="hint">
+            A map location used for “nearest …” and distance. Gurgaon center is the city point
+            (28.4595, 77.0266), not a restaurant.
+          </p>
+          <div class="row">
+            <label>
+              Preset
+              <select id="search-preset" data-point="search">
+                <option value="">None</option>
+                <option value="28.4595,77.0266">Gurgaon center</option>
+                <option value="28.495,77.088">Cyber Hub</option>
+                <option value="custom">Custom coordinates</option>
+              </select>
+            </label>
+            <label class="coord" data-coords="search" hidden>
+              Latitude
+              <input id="search-lat" type="number" step="any" placeholder="28.4595" />
+            </label>
+            <label class="coord" data-coords="search" hidden>
+              Longitude
+              <input id="search-lng" type="number" step="any" placeholder="77.0266" />
+            </label>
+          </div>
+        </fieldset>
+        <button type="submit">Search</button>
+      </form>
+    </section>
+
+    <section id="panel-browse" role="tabpanel" aria-labelledby="tab-browse" hidden>
+      <form id="browse-form">
+        <div class="row">
+          <label>
+            City
+            <input id="city" name="city" placeholder="Gurgaon" />
+          </label>
+          <label>
+            Cuisine
+            <input id="cuisines" name="cuisines" placeholder="South Indian" />
+          </label>
+          <label>
+            Name contains
+            <input id="name" name="name" placeholder="Sagar" />
+          </label>
+        </div>
+        <div class="row">
+          <label>
+            Min rating
+            <input id="minRating" name="minRating" type="number" min="0" max="5" step="0.1" placeholder="4" />
+          </label>
+          <label>
+            Within km
+            <input id="maxDistanceKm" name="maxDistanceKm" type="number" min="0" step="0.1" placeholder="10" />
+          </label>
+          <label>
+            Sort
+            <select id="sort" name="sort">
+              <option value="">Default</option>
+              <option value="rating">Highest rating</option>
+              <option value="distance">Nearest</option>
+              <option value="name">Name</option>
+            </select>
+          </label>
+        </div>
+        <fieldset class="near">
+          <legend>Starting point</legend>
+          <p class="hint">Required for nearest sort and “within km”. Same city point as search.</p>
+          <div class="row">
+            <label>
+              Preset
+              <select id="browse-preset" data-point="browse">
+                <option value="">None</option>
+                <option value="28.4595,77.0266">Gurgaon center</option>
+                <option value="28.495,77.088">Cyber Hub</option>
+                <option value="custom">Custom coordinates</option>
+              </select>
+            </label>
+            <label class="coord" data-coords="browse" hidden>
+              Latitude
+              <input id="browse-lat" type="number" step="any" placeholder="28.4595" />
+            </label>
+            <label class="coord" data-coords="browse" hidden>
+              Longitude
+              <input id="browse-lng" type="number" step="any" placeholder="77.0266" />
+            </label>
+          </div>
+        </fieldset>
+        <button type="submit">List restaurants</button>
+      </form>
+    </section>
+
+    <section id="panel-add" role="tabpanel" aria-labelledby="tab-add" hidden>
+      <form id="add-form">
+        <div class="row">
+          <label>
+            Name
+            <input id="add-name" name="name" required maxlength="200" placeholder="Live Edit Kitchen" />
+          </label>
+          <label>
+            City
+            <input id="add-city" name="city" required placeholder="Gurgaon" />
+          </label>
+          <label>
+            Locality
+            <input id="add-locality" name="locality" placeholder="DLF Phase 3" />
+          </label>
+        </div>
+        <label>
+          Address
+          <input id="add-address" name="address" placeholder="Shop 12, Cyber Hub" />
+        </label>
+        <div class="row">
+          <label>
+            Cuisines
+            <input id="add-cuisines" name="cuisines" placeholder="Cafe, North Indian" />
+          </label>
+          <label>
+            Rating (0–5)
+            <input id="add-rating" name="averageRating" type="number" min="0" max="5" step="0.1" placeholder="4.2" />
+          </label>
+          <label>
+            Cost for two
+            <input id="add-cost" name="avgCostForTwo" type="number" min="0" step="1" placeholder="800" />
+          </label>
+        </div>
+        <div class="row">
+          <label>
+            Latitude
+            <input id="add-lat" name="latitude" type="number" min="-90" max="90" step="any" placeholder="28.46" />
+          </label>
+          <label>
+            Longitude
+            <input id="add-lng" name="longitude" type="number" min="-180" max="180" step="any" placeholder="77.03" />
+          </label>
+          <label>
+            Currency
+            <input id="add-currency" name="currency" placeholder="Rs." value="Rs." />
+          </label>
+        </div>
+        <div class="checks">
+          <label class="check"><input id="add-booking" type="checkbox" /> Table booking</label>
+          <label class="check"><input id="add-delivery" type="checkbox" /> Online delivery</label>
+          <label class="check"><input id="add-now" type="checkbox" /> Delivering now</label>
+        </div>
+        <button type="submit">Add restaurant</button>
+      </form>
+    </section>
+
+    <section id="panel-lookup" role="tabpanel" aria-labelledby="tab-lookup" hidden>
+      <form id="lookup-form">
+        <label>
+          Restaurant id
+          <input id="lookup-id" name="id" inputmode="numeric" required placeholder="18241590" />
+        </label>
+        <p class="hint">Sample id after the CSV load: 18241590 (Sagar Ratna).</p>
+        <button type="submit">Open</button>
+      </form>
+    </section>
+
+    <p id="status" role="status"></p>
+    <section id="detail" hidden></section>
+    <nav id="pager" class="pager" hidden>
+      <button type="button" id="prev">Previous</button>
+      <span id="page-label"></span>
+      <button type="button" id="next">Next</button>
+    </nav>
+    <section id="results"></section>
+
+    <footer>
+      <a href="/q/swagger-ui">Swagger</a>
+      ·
+      <a href="/q/health">Health</a>
+    </footer>
+    <script src="/app.js"></script>
+  </body>
+</html>
