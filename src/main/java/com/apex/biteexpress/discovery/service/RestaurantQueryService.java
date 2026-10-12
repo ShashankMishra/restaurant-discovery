@@ -40,6 +40,35 @@ public class RestaurantQueryService {
       pipeline.add(new Document("$match", filter));
     }
 
+    if (q.hasCoordinates()) {
+      pipeline.add(
+          new Document(
+              "$facet",
+              new Document(
+                      "items",
+                      List.of(
+                          new Document("$sort", sortDoc(q)),
+                          new Document("$skip", skip),
+                          new Document("$limit", size)))
+                  .append("total", List.of(new Document("$count", "n")))));
+      List<Document> out = restaurants.aggregate(pipeline);
+      if (out.isEmpty()) {
+        return new RestaurantPage(List.of(), page, size, 0);
+      }
+      Document facet = out.get(0);
+      List<Document> itemDocs = facet.getList("items", Document.class);
+      if (itemDocs == null) {
+        itemDocs = List.of();
+      }
+      List<Document> totals = facet.getList("total", Document.class);
+      long total = 0;
+      if (totals != null && !totals.isEmpty() && totals.get(0).get("n") instanceof Number n) {
+        total = n.longValue();
+      }
+      List<RestaurantSummary> items = itemDocs.stream().map(mapper::toSummary).toList();
+      return new RestaurantPage(items, page, size, total);
+    }
+
     pipeline.add(new Document("$sort", sortDoc(q)));
     pipeline.add(new Document("$skip", skip));
     pipeline.add(new Document("$limit", size));
